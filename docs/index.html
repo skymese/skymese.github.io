@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-page-node-id="kBcsdjTblcoWuFxJUbwgiw">
+<head data-page-node-id="ro2qKUHkihLpgJP1o1K5yA">
+<meta charset="utf-8" data-page-node-id="M34US5da29xsEw8PDYFN8X" />
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="j5WEVhECGbV8rHsKc4W73C" />
+<title>AI Tools Hub · AI 工具与开源项目导航</title>
+<meta name="description" content="精选 AI 工具与热门开源项目导航，分类整理、支持搜索，收藏一个页面找到所有 AI 资源。" data-page-node-id="479iEuBAxv0DQYt48PRmfY" />
+<meta name="color-scheme" content="dark light" data-page-node-id="zCTLnkagiMNMQ0VbEGd752" />
+<style>
+  :root{
+    --bg:#0a0b0d; --bg-soft:#0e1014;
+    --panel:#12141a; --panel-2:#171a22; --panel-hover:#1b1f2a;
+    --line:#252a36; --line-soft:#1e222c;
+    --text:#eef1f7; --muted:#8b93a7; --faint:#5f6779;
+    --accent:#6ee7b7; --accent-2:#7aa2f7; --accent-3:#c792ea;
+    --shadow:0 8px 30px rgba(0,0,0,.28);
+    --radius:14px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  [data-theme="light"]{
+    --bg:#f7f8fa; --bg-soft:#eef1f5;
+    --panel:#ffffff; --panel-2:#f2f4f8; --panel-hover:#eef1f6;
+    --line:#e2e6ee; --line-soft:#eceff4;
+    --text:#1a1e28; --muted:#5c6474; --faint:#8b93a3;
+    --accent:#0f9d76; --accent-2:#3b6fd4; --accent-3:#8b4fc0;
+    --shadow:0 8px 30px rgba(24,39,75,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+    line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;
+    transition:background .25s,color .25s;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(720px 380px at 12% -8%,rgba(110,231,183,.10),transparent 70%),
+      radial-gradient(640px 360px at 92% 2%,rgba(122,162,247,.10),transparent 70%),
+      radial-gradient(560px 320px at 50% 20%,rgba(199,146,234,.05),transparent 70%);
+    -webkit-mask-image:linear-gradient(#000 0%,transparent 78%);
+    mask-image:linear-gradient(#000 0%,transparent 78%);
+  }
+  [data-theme="light"] body::before{
+    background:
+      radial-gradient(720px 380px at 12% -8%,rgba(15,157,118,.10),transparent 70%),
+      radial-gradient(640px 360px at 92% 2%,rgba(59,111,212,.10),transparent 70%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px 64px}
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:20;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:14px 0;margin-bottom:0;
+    border-bottom:1px solid var(--line-soft);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:17px;letter-spacing:.01em;white-space:nowrap}
+  .logo{
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#07110d;font-size:18px;font-weight:800;box-shadow:0 4px 16px rgba(110,231,183,.25);
+  }
+  .brand small{font-family:var(--mono);font-size:10px;color:var(--faint);font-weight:500;letter-spacing:.12em}
+  .nav{display:flex;align-items:center;gap:10px}
+  .icon-btn{
+    width:36px;height:36px;border-radius:10px;display:grid;place-items:center;cursor:pointer;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:16px;
+    transition:border-color .15s,color .15s,transform .15s;
+  }
+  .icon-btn:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
+  .nav-link{
+    display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:9px;
+    font-size:13px;font-weight:600;text-decoration:none;color:var(--text);
+    border:1px solid var(--line);background:var(--panel);transition:border-color .15s,transform .15s;
+  }
+  .nav-link:hover{border-color:var(--accent-2);transform:translateY(-1px)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 30px;text-align:center}
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--accent);
+    text-transform:uppercase;margin:0 0 18px;
+  }
+  h1{font-size:clamp(30px,5.4vw,52px);line-height:1.17;letter-spacing:-.025em;margin:0 0 16px;font-weight:720}
+  h1 em{font-style:normal;background:linear-gradient(100deg,var(--accent),var(--accent-2) 60%,var(--accent-3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .lede{font-size:15.5px;color:var(--muted);max-width:620px;margin:0 auto 26px}
+  .stats{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:26px}
+  .stat{text-align:center}
+  .stat b{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text)}
+  .stat span{display:block;font-size:11.5px;color:var(--faint);letter-spacing:.06em;margin-top:2px}
+
+  /* ---------- search ---------- */
+  .search-wrap{max-width:640px;margin:30px auto 0;position:relative}
+  .search-wrap svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--faint)}
+  #search{
+    width:100%;padding:14px 62px 14px 46px;border-radius:12px;
+    border:1px solid var(--line);background:var(--panel);color:var(--text);
+    font-family:var(--sans);font-size:14.5px;outline:none;transition:border-color .15s,box-shadow .15s;
+  }
+  #search::placeholder{color:var(--faint)}
+  #search:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+  .kbd{
+    position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);font-size:11px;color:var(--faint);
+    border:1px solid var(--line);border-radius:6px;padding:2px 7px;background:var(--panel-2);
+  }
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;justify-content:center;gap:8px;margin:38px 0 20px}
+  .tab{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:11px;
+    font-size:14px;font-weight:650;cursor:pointer;color:var(--muted);
+    border:1px solid var(--line);background:var(--panel);
+    transition:all .16s;
+  }
+  .tab:hover{color:var(--text);border-color:#3a4152}
+  .tab.active{color:#08120e;background:var(--accent);border-color:var(--accent);box-shadow:0 4px 18px color-mix(in srgb,var(--accent) 25%,transparent)}
+  [data-theme="light"] .tab.active{color:#fff}
+  .tab .count{font-family:var(--mono);font-size:11px;opacity:.7}
+
+  /* ---------- category chips ---------- */
+  .cats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:30px}
+  .chip{
+    padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer;
+    border:1px solid var(--line);background:transparent;color:var(--muted);transition:all .15s;white-space:nowrap;
+  }
+  .chip:hover{color:var(--text);border-color:var(--accent-2)}
+  .chip.active{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 50%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+
+  /* ---------- cards ---------- */
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 16px}
+  .section-head h2{font-size:19px;letter-spacing:-.01em;margin:0;font-weight:680}
+  .section-head .hint{font-size:12px;color:var(--faint)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:14px}
+  .card{
+    position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;min-height:150px;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    transition:transform .16s,border-color .16s,background .16s,box-shadow .16s;overflow:hidden;
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:var(--radius);pointer-events:none;
+    background:linear-gradient(135deg,color-mix(in srgb,var(--c,var(--accent)) 8%,transparent),transparent 60%);
+    opacity:0;transition:opacity .2s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c,var(--accent)) 55%,transparent);background:var(--panel-hover);box-shadow:var(--shadow)}
+  .card:hover::after{opacity:1}
+  .card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:11px}
+  .ico{
+    width:42px;height:42px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:21px;
+    background:color-mix(in srgb,var(--c,var(--accent)) 15%,var(--panel-2));
+    border:1px solid color-mix(in srgb,var(--c,var(--accent)) 28%,transparent);
+  }
+  .card-name{font-size:15.5px;font-weight:680;line-height:1.3;margin:1px 0 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .hot{font-size:11px}
+  .arrow{margin-left:auto;color:var(--faint);font-size:15px;transition:transform .16s,color .16s;flex:none}
+  .card:hover .arrow{transform:translate(2px,-2px);color:var(--c,var(--accent))}
+  .card-desc{font-size:12.8px;color:var(--muted);margin:0 0 13px;flex:1;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:10.5px;color:var(--faint);border:1px solid var(--line-soft);border-radius:5px;padding:2px 7px;font-family:var(--mono)}
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty .big{font-size:40px;margin-bottom:10px}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:56px;border-top:1px solid var(--line);padding-top:22px;
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-size:12px;color:var(--faint);font-family:var(--mono);
+  }
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--accent)}
+
+  @media (max-width:640px){
+    .hero{padding:44px 0 22px}
+    .stats{gap:18px}
+    .stat b{font-size:19px}
+    .tabs{margin-top:28px}
+    .tab{padding:9px 16px}
+    #search{padding-right:14px}
+    .kbd{display:none}
+    .section-head .hint{display:none}
+  }
+</style>
+</head>
+<body data-page-node-id="o6AGefR8XFW0Kdua55DNo0">
+<div class="wrap" data-page-node-id="mmmbFOmK3p8Uq5GNZweXzg">
+
+  <header data-page-node-id="6jxjnmfczYf0aa1ialkGR3">
+    <div class="brand" data-page-node-id="Kxw7gP5AGvuLPbKvG0VgYp">
+      <span class="logo" data-page-node-id="8UOwaqs99pAGZSFnSwoWT3">✦</span>
+      <span data-page-node-id="MylYrFC0Aj6KjNN70yY93A">AI Tools Hub <small data-page-node-id="178HsKg67KxCFC3Oc5bFOX">/ NAVIGATOR</small></span>
+    </div>
+    <div class="nav" data-page-node-id="H4DnSwwIjSvclkpyrnvh47">
+      <button class="icon-btn" id="themeBtn" title="切换深浅色主题" aria-label="切换主题" data-page-node-id="VsGAZ4Nf6Hlc4TEImkLFOa">◐</button>
+      <a class="nav-link" href="https://github.com/skymese/skymese.github.io" target="_blank" rel="noopener" data-page-node-id="zkmOmtUE53Eb3vBQkqlnOp">GitHub ↗</a>
+    </div>
+  </header>
+
+  <section class="hero" data-page-node-id="G6D7HNrRktmjREJOuPlexA">
+    <p class="eyebrow" data-page-node-id="biN3kLEJsbAW1fTpM7ENVH">CURATED AI RESOURCES · 2026</p>
+    <h1 data-page-node-id="hiVp5oHpjYOxfk4BkKEkHL">发现最好的 <em data-page-node-id="lFkwWnh8y3aw0FwZ1ogVnF">AI 工具</em><br data-page-node-id="Q6FdfYrY2PdR0sU57XtuHD">与热门开源项目</h1>
+    <p class="lede" data-page-node-id="oUhrtCIJecOCDEumcJQDRi">精选值得关注的 AI 产品与开源项目，按用途分类整理、支持即时搜索。收藏这一个页面，随时找到你需要的 AI 资源。</p>
+    <div class="stats" data-page-node-id="NIPdj3SDSwbJx5kmesWeCT">
+      <div class="stat" data-page-node-id="XfK7nr1TuCVIqsXXzfdWkf"><b id="statTools" data-page-node-id="AgcalNEqPqOLhpWFYI9Pcq">—</b><span data-page-node-id="L247CSGkBdLsc1iAUvDSSR">AI 工具</span></div>
+      <div class="stat" data-page-node-id="I2XEnVWiKiBJgKOR4oOIHI"><b id="statOss" data-page-node-id="wKi4DjwxRcRQ8KMFaCGdjV">—</b><span data-page-node-id="0kbASEOA36rgEdPBoXYbv6">开源项目</span></div>
+      <div class="stat" data-page-node-id="F4vYPaderHjrA5SW8KJPx8"><b id="statCats" data-page-node-id="Qlz18Yzlt75zYJONtnEtaG">—</b><span data-page-node-id="FVzsi4y2Z9CXYHSLEbiDLb">精细分类</span></div>
+      <div class="stat" data-page-node-id="2kSzRQmyRc02I2mffV7gBs"><b data-page-node-id="PJE38LAxQPRO1NORHnv0MQ">∞</b><span data-page-node-id="CzbJk94gYC4aPLW52fnNOt">持续更新</span></div>
+    </div>
+    <div class="search-wrap" data-page-node-id="9tUOS1woS4LBlxtzgKN92V">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="w1fBvizC9eybPWID049lyF"><circle cx="11" cy="11" r="7" data-page-node-id="rceyGrQdW2Tw9ljYB3MRzS"/><path d="m20 20-3.5-3.5" data-page-node-id="zC5BHfvgc7MLgxTCfGdj8I"/></svg>
+      <input id="search" type="search" placeholder="搜索工具名称、描述或标签…" autocomplete="off" data-page-node-id="z8vxOJbVhrvhLFGCwi6oHH" />
+      <span class="kbd" data-page-node-id="1XFUTY66eUsqGsnQNG44Uv">/</span>
+    </div>
+  </section>
+
+  <div class="tabs" id="tabs" data-page-node-id="rfvIimyTSMaOtDpGTY9kqp">
+    <button class="tab active" data-tab="tools" data-page-node-id="Hw18fCFyTTKWdoNGIoFFg3">🧰 AI 工具 <span class="count" id="tabCountTools" data-page-node-id="rIv7SKEw9hzQZYnXJmqzxM"></span></button>
+    <button class="tab" data-tab="oss" data-page-node-id="Hfrn9bBGCTEzFYfLjlNL84">⭐ 开源项目 <span class="count" id="tabCountOss" data-page-node-id="Eu7qfSgC4GxidevkMusImQ"></span></button>
+  </div>
+
+  <div class="cats" id="cats" data-page-node-id="7Rh4eUhdlK9xDWZrbKiLmU"></div>
+
+  <div class="section-head" data-page-node-id="uCNCrDlr55Osc0mL4m0Gzo">
+    <h2 id="sectionTitle" data-page-node-id="y8HO9TDU0NOCSbXN5N7sDF">全部工具</h2>
+    <span class="hint" id="resultHint" data-page-node-id="B0SLvVe1zAALzNBOwkUDVz"></span>
+  </div>
+  <div class="grid" id="grid" data-page-node-id="F7k3U9ZWCVFFYuG88kaXCr"></div>
+
+  <footer data-page-node-id="8TkMpvlOW76WXEGIuTcuur">
+    <span data-page-node-id="BJy09WUftATW5himK31U9E">© <span id="year" data-page-node-id="EZNXiVPE2plGO9T7NktSbk">2026</span> · AI Tools Hub · 用 ❤ 与 GitHub Pages 构建</span>
+    <span data-page-node-id="cHKxPSbE0bLfSizozIGeVW"><a href="https://github.com/skymese/skymese.github.io" target="_blank" rel="noopener" data-page-node-id="r3e3M3CfV0RwaFMjpsWpgQ">源码 / 提交收录 →</a></span>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  tools: {cats:{
+      all:'全部', chat:'对话助手', code:'编程开发', image:'图像生成', video:'视频生成',
+      audio:'音乐音频', search:'搜索研究', office:'效率办公', design:'设计创意', misc:'聚合平台'
+    },colors:{chat:'#6ee7b7',code:'#7aa2f7',image:'#c792ea',video:'#f78da7',audio:'#f5c26b',search:'#66d9e8',office:'#9ae6a0',design:'#ffa07a',misc:'#a0aec0'},items:[
+
+      ['ChatGPT','💬','OpenAI 旗舰对话模型，通用能力与生态最成熟','https://chatgpt.com','chat','对话|多模态|GPT',1],
+      ['Claude','🤖','Anthropic 出品，长文本与代码写作表现突出','https://claude.ai','chat','对话|长文本|写作',1],
+      ['Gemini','✨','Google 多模态大模型，深度整合搜索与办公','https://gemini.google.com','chat','多模态|Google',1],
+      ['DeepSeek','🐋','国产高性价比推理模型，代码与数学能力强','https://chat.deepseek.com','chat','对话|推理|国产',1],
+      ['Kimi','🌙','月之暗面出品，超长上下文与文件阅读见长','https://kimi.moonshot.cn','chat','长文本|国产',1],
+      ['通义千问','☁️','阿里云大模型，多功能助手与插件生态','https://tongyi.aliyun.com','chat','对话|阿里|国产',0],
+      ['豆包','🫘','字节跳动 AI 助手，中文场景体验流畅','https://www.doubao.com','chat','对话|字节|国产',0],
+      ['文心一言','📚','百度大模型助手，知识问答与中文创作','https://yiyan.baidu.com','chat','对话|百度|国产',0],
+      ['Grok','⚡','xAI 出品，实时联网、风格犀利','https://grok.com','chat','对话|实时|xAI',0],
+      ['Mistral','🌪️','欧洲开源阵营代表，轻量高效','https://chat.mistral.ai','chat','对话|开源|欧洲',0],
+      ['Cursor','⌨️','AI 原生代码编辑器，全网上下文感知编程','https://cursor.com','code','IDE|编程|Agent',1],
+      ['GitHub Copilot','🤖','GitHub 官方 AI 编程助手，IDE 深度集成','https://github.com/copilot','code','编程|插件|GitHub',1],
+      ['Windsurf','🏄','Cognition 旗下 AI IDE，Flow 式协作编程','https://windsurf.com','code','IDE|编程|Agent',1],
+      ['v0','🎨','Vercel 出品，用自然语言生成前端界面','https://v0.dev','code','前端|UI|生成',1],
+      ['Bolt.new','⚡','浏览器内全栈开发，对话式建站与部署','https://bolt.new','code','全栈|生成|浏览器',0],
+      ['Replit','💻','在线 IDE + AI Agent，一句话构建并上线应用','https://replit.com','code','IDE|在线|Agent',0],
+      ['Claude Code','🧑‍💻','终端里的 AI 编程代理，强于大型重构','https://claude.com/claude-code','code','命令行|Agent|编程',1],
+      ['Cline','🦴','VS Code 开源编程 Agent，可自主执行任务','https://cline.bot','code','Agent|开源|VSCode',0],
+      ['Tabnine','🔧','企业向代码补全，支持私有化部署','https://www.tabnine.com','code','补全|企业|私有化',0],
+      ['Midjourney','🎨','艺术性与审美顶级 AI 绘图标杆','https://www.midjourney.com','image','绘图|艺术|标杆',1],
+      ['FLUX','🌊','Black Forest Labs 出品，细节与文字渲染领先','https://blackforestlabs.ai','image','绘图|开源|细节',1],
+      ['DALL·E','🖼️','OpenAI 图像生成，与 ChatGPT 深度整合','https://openai.com/index/dall-e-3/','image','绘图|OpenAI',0],
+      ['Stable Diffusion','🎭','最流行的开源图像生成生态，可本地部署','https://stability.ai','image','绘图|开源|本地',1],
+      ['即梦 Dreamina','✨','字节跳动 AI 创作平台，中文提示词友好','https://jimeng.jianying.com','image','绘图|国产|字节',0],
+      ['Leonardo.ai','🦁','面向游戏与设计的 AI 素材生成平台','https://leonardo.ai','image','绘图|设计|游戏',0],
+      ['Adobe Firefly','🔥','商用安全的生成式 AI，集成 Adobe 全家桶','https://firefly.adobe.com','image','绘图|商用|Adobe',0],
+      ['Ideogram','🔤','文字排版渲染最强的图像生成工具','https://ideogram.ai','image','绘图|文字|海报',0],
+      ['Sora','🎬','OpenAI 视频生成模型，物理一致性与叙事强','https://sora.com','video','视频|OpenAI|生成',1],
+      ['Runway','🎥','专业 AI 视频创作套件，Gen 系列模型','https://runwayml.com','video','视频|剪辑|创作',1],
+      ['可灵 Kling','🎞️','快手出品，国产视频生成第一梯队','https://klingai.kuaishou.com','video','视频|国产|快手',1],
+      ['Pika','🎲','轻量易用的 AI 视频生成与特效工具','https://pika.art','video','视频|特效|轻量',0],
+      ['Luma Dream Machine','🌙','快速生成高质感镜头，运动自然','https://lumalabs.ai/dream-machine','video','视频|镜头|生成',0],
+      ['海螺 AI','🐚','MiniMax 出品，视频与语音一体创作','https://hailuoai.video','video','视频|国产|MiniMax',0],
+      ['Vidu','📹','生数科技出品，国产视频生成新锐','https://www.vidu.cn','video','视频|国产|生成',0],
+      ['HeyGen','🗣️','AI 数字人视频，多语言口型同步','https://www.heygen.com','video','数字人|口型|营销',0],
+      ['Suno','🎵','一句话生成完整歌曲，音乐生成现象级产品','https://suno.com','audio','音乐|生成|歌曲',1],
+      ['Udio','🎧','高质量 AI 音乐生成，音质与编曲出色','https://www.udio.com','audio','音乐|生成|音质',1],
+      ['ElevenLabs','🔊','最自然的 AI 语音合成与声音克隆','https://elevenlabs.io','audio','语音|TTS|克隆',1],
+      ['Mubert','🎶','免版税 AI 背景音乐生成平台','https://mubert.com','audio','音乐|版权|背景乐',0],
+      ['AIVA','🎼','AI 作曲助手，擅长古典与影视配乐','https://www.aiva.ai','audio','作曲|配乐|古典',0],
+      ['Murf AI','🎤','文本转语音平台，适合配音与演示','https://murf.ai','audio','语音|TTS|配音',0],
+      ['Perplexity','🔎','AI 答案引擎，带来源引用的对话式搜索','https://www.perplexity.ai','search','搜索|引用|研究',1],
+      ['秘塔 AI 搜索','🔍','国产 AI 搜索，结构化大纲与知识图谱','https://metaso.cn','search','搜索|国产|大纲',1],
+      ['天工 AI','⚒️','昆仑万维 AI 搜索与多模态创作平台','https://www.tiangong.cn','search','搜索|国产|创作',0],
+      ['NotebookLM','📓','Google 基于文档的 AI 研究笔记工具','https://notebooklm.google.com','search','研究|笔记|Google',1],
+      ['Consensus','🎓','面向科研论文的 AI 搜索引擎','https://consensus.app','search','学术|论文|搜索',0],
+      ['Elicit','📖','自动化文献综述与证据提取助手','https://elicit.com','search','学术|文献|研究',0],
+      ['You.com','🧭','可切换模型的 AI 搜索与写作助手','https://you.com','search','搜索|写作|多模型',0],
+      ['Genspark','⚡','AI 搜索引擎，聚合多源生成调研结果','https://www.genspark.ai','search','搜索|聚合|调研',0],
+      ['Notion AI','📝','集成在 Notion 中的写作、总结与问答','https://www.notion.com/product/ai','office','文档|写作|Notion',1],
+      ['Gamma','🖥️','一句话生成演示文稿、文档与网页','https://gamma.app','office','PPT|文档|生成',1],
+      ['Tome','📊','AI 驱动的故事化演示文稿工具','https://tome.app','office','PPT|叙事|生成',0],
+      ['飞书智能伙伴','🪶','企业协作套件内置 AI，会议与文档提效','https://www.feishu.cn','office','协作|企业|国产',0],
+      ['WPS AI','📄','国产办公套件的 AI 写作与阅读助手','https://ai.wps.cn','office','办公|文档|国产',0],
+      ['Canva','🎨','在线设计平台，AI 生成图文与素材','https://www.canva.com','office','设计|模板|AI',1],
+      ['Otter.ai','🦦','实时会议转写与纪要生成','https://otter.ai','office','会议|转写|纪要',0],
+      ['Fireflies.ai','🔥','会议录音、转写与要点提取助手','https://fireflies.ai','office','会议|转写|协作',0],
+      ['Figma','🎨','协作 UI 设计工具，内置 AI 设计能力','https://www.figma.com','design','UI|协作|设计',1],
+      ['Framer','🌐','可视化建站工具，AI 辅助生成网页','https://www.framer.com','design','建站|网页|设计',0],
+      ['Relume','🧩','AI 生成网站线框图与组件库','https://www.relume.io','design','线框|UI|生成',0],
+      ['Uizard','📱','手稿截图转 UI 原型，快速出设计稿','https://uizard.io','design','原型|UI|生成',0],
+      ['Looka','🦁','AI 生成 Logo 与品牌视觉套装','https://looka.com','design','Logo|品牌|生成',0],
+      ['Cleanup.pictures','🧹','一键移除图片中的杂物与水印','https://cleanup.pictures','design','修图|去水印|工具',0],
+      ['Poe','🗣️','Quora 出品，一个界面调用多个 AI 模型','https://poe.com','misc','聚合|多模型|聊天',1],
+      ['OpenRouter','🔀','统一 API 聚合数百种大模型，比价调用','https://openrouter.ai','misc','API|聚合|开发者',1],
+      ['Hugging Face','🤗','全球最大 AI 模型与数据集社区','https://huggingface.co','misc','社区|模型|数据集',1],
+      ['Together AI','🔗','高性能开源模型推理与微调云平台','https://www.together.ai','misc','推理|云平台|开源',0],
+      ['Replicate','⚙️','云端运行 AI 模型的 API 平台','https://replicate.com','misc','API|模型|部署',0],
+      ['LobeChat','🦞','开源多模型聊天框架，支持插件与知识库','https://lobehub.com','misc','开源|聊天|插件',0]
+    
+]},
+  oss: {cats:{
+      all:'全部', llm:'大模型', framework:'开发框架', inference:'推理部署', agent:'智能体 Agent',
+      training:'训练微调', multimodal:'多模态生成', vector:'向量数据库', speech:'语音技术'
+    },colors:{llm:'#6ee7b7',framework:'#7aa2f7',inference:'#66d9e8',agent:'#c792ea',training:'#f5c26b',multimodal:'#f78da7',vector:'#9ae6a0',speech:'#ffa07a'},items:[
+
+      ['LLaMA','🦙','Meta 开源基础大模型，开源生态基石','https://github.com/meta-llama/llama','llm','Meta|基础模型|开源',1],
+      ['DeepSeek-V3','🐋','国产开源 MoE 大模型，性能与成本惊艳','https://github.com/deepseek-ai/DeepSeek-V3','llm','MoE|国产|推理',1],
+      ['Qwen','☁️','阿里通义千问全系列开源模型，规格齐全','https://github.com/QwenLM/Qwen3','llm','阿里|国产|多规格',1],
+      ['Mistral','🌪️','欧洲开源模型代表，高效小模型见长','https://github.com/mistralai/mistral-src','llm','欧洲|轻量|开源',1],
+      ['GLM','🦅','智谱 ChatGLM / GLM 系列开源模型','https://github.com/THUDM/GLM-4','llm','清华|国产|对话',1],
+      ['InternLM','🧠','上海 AI Lab 书生浦语开源大模型','https://github.com/InternLM/InternLM','llm','国产|多模态',0],
+      ['Baichuan2','🌀','百川智能开源大模型系列','https://github.com/baichuan-inc/Baichuan2','llm','国产|开源',0],
+      ['Falcon','🦅','TII 开源大模型，训练数据完全透明','https://github.com/tiiuae/falcon-llm','llm','TII|开源|透明',0],
+      ['LangChain','🦜','最主流的 LLM 应用开发框架与生态','https://github.com/langchain-ai/langchain','framework','框架|链式|生态',1],
+      ['LlamaIndex','🦙','数据索引与 RAG 检索增强框架','https://github.com/run-llama/llama_index','framework','RAG|检索|数据',1],
+      ['Dify','🤖','开源 LLM 应用开发平台，可视化编排','https://github.com/langgenius/dify','framework','平台|可视化|编排',1],
+      ['FastGPT','🚀','国产知识库问答平台，开箱即用','https://github.com/labring/FastGPT','framework','知识库|问答|国产',1],
+      ['RAGFlow','📚','企业级 RAG 引擎，深度文档理解','https://github.com/infiniflow/ragflow','framework','RAG|文档|企业',1],
+      ['Langflow','🧩','可视化拖拽构建 AI 应用与 Agent','https://github.com/langflow-ai/langflow','framework','可视化|低代码|流程',0],
+      ['Flowise','🌊','拖拽式 LangChain 应用构建工具','https://github.com/FlowiseAI/Flowise','framework','可视化|低代码|LangChain',0],
+      ['n8n','⚙️','可扩展工作流自动化，支持 AI 节点','https://github.com/n8n-io/n8n','framework','自动化|工作流|集成',1],
+      ['Haystack','🌾','端到端 LLM 应用框架，擅长搜索与问答','https://github.com/deepset-ai/haystack','framework','框架|搜索|问答',0],
+      ['Ollama','🦙','本地一键运行大模型，最易上手','https://github.com/ollama/ollama','inference','本地|部署|易用',1],
+      ['vLLM','⚡','高吞吐 LLM 推理引擎，PagedAttention','https://github.com/vllm-project/vllm','inference','推理|高吞吐|服务',1],
+      ['llama.cpp','🐾','C/C++ 推理引擎，量化本地运行标杆','https://github.com/ggml-org/llama.cpp','inference','本地|量化|C++',1],
+      ['SGLang','🚀','高性能 LLM 服务框架，结构化生成快','https://github.com/sgl-project/sglang','inference','推理|服务|高性能',0],
+      ['LocalAI','🏠','本地 OpenAI 兼容 API 推理，隐私友好','https://github.com/mudler/LocalAI','inference','本地|API|隐私',0],
+      ['GPT4All','🤖','面向消费级硬件的本地模型运行工具','https://github.com/nomic-ai/gpt4all','inference','本地|桌面|轻量',0],
+      ['TensorRT-LLM','🔧','NVIDIA 官方 GPU 推理优化库','https://github.com/NVIDIA/TensorRT-LLM','inference','NVIDIA|GPU|优化',0],
+      ['AutoGen','🎭','微软多智能体对话框架，任务协作','https://github.com/microsoft/autogen','agent','多智能体|微软|协作',1],
+      ['CrewAI','👥','角色化多 Agent 协作框架，易用性强','https://github.com/crewAIInc/crewAI','agent','多智能体|角色|协作',1],
+      ['MetaGPT','🧠','软件公司式多 Agent，一句话生成项目','https://github.com/geekan/MetaGPT','agent','多智能体|软件工程',0],
+      ['AgentScope','🛡️','阿里高可用多智能体开发框架','https://github.com/modelscope/agentscope','agent','多智能体|阿里|框架',0],
+      ['CAMEL','🐫','大规模多智能体协作与研究对象框架','https://github.com/camel-ai/camel','agent','多智能体|研究|协作',0],
+      ['smolagents','🐜','HuggingFace 轻量 Agent 框架，代码即行动','https://github.com/huggingface/smolagents','agent','轻量|Agent|HF',0],
+      ['PydanticAI','🔷','类型安全的 Agent 开发框架','https://github.com/pydantic/pydantic-ai','agent','类型安全|框架|Python',0],
+      ['Semantic Kernel','🧬','微软企业级 AI 编排 SDK','https://github.com/microsoft/semantic-kernel','agent','微软|编排|企业',0],
+      ['LLaMA-Factory','🏭','一站式大模型微调平台，支持数百模型','https://github.com/hiyouga/LLaMA-Factory','training','微调|一站式|国产',1],
+      ['Unsloth','🦥','大模型微调加速，显存占用直降','https://github.com/unslothai/unsloth','training','微调|加速|省显存',1],
+      ['Axolotl','🦎','灵活的多模型微调与数据处理工具','https://github.com/axolotl-ai-cloud/axolotl','training','微调|配置|灵活',0],
+      ['DeepSpeed','⚡','微软大规模模型训练与推理优化库','https://github.com/microsoft/DeepSpeed','training','训练|微软|分布式',1],
+      ['PEFT','🔧','HuggingFace 参数高效微调库（LoRA 等）','https://github.com/huggingface/peft','training','LoRA|微调|HF',0],
+      ['TRL','📈','Transformer 强化学习与对齐训练库','https://github.com/huggingface/trl','training','RLHF|对齐|HF',0],
+      ['ColossalAI','🌌','国产大规模并行训练系统','https://github.com/hpcaitech/ColossalAI','training','训练|并行|国产',0],
+      ['ComfyUI','🌐','节点式 Stable Diffusion 工作流引擎','https://github.com/comfyanonymous/ComfyUI','multimodal','绘图|工作流|节点',1],
+      ['SD WebUI','🎨','最经典的 Stable Diffusion 图形界面','https://github.com/AUTOMATIC1111/stable-diffusion-webui','multimodal','绘图|WebUI|经典',1],
+      ['Fooocus','🎯','极简绘图界面，一键出高质量图','https://github.com/lllyasviel/Fooocus','multimodal','绘图|极简|易用',0],
+      ['HunyuanVideo','🐂','腾讯开源视频生成大模型','https://github.com/Tencent/HunyuanVideo','multimodal','视频|腾讯|开源',1],
+      ['CogVideoX','🎞️','智谱开源视频生成模型系列','https://github.com/THUDM/CogVideo','multimodal','视频|智谱|开源',0],
+      ['LivePortrait','🖼️','快手开源人脸驱动动画，表情迁移','https://github.com/Kwai-Video/LivePortrait','multimodal','数字人|表情|快手',0],
+      ['Wav2Lip','👄','语音驱动唇形同步经典项目','https://github.com/Rudrabha/Wav2Lip','multimodal','口型|语音|视频',0],
+      ['Milvus','🌌','开源分布式向量数据库，云原生架构','https://github.com/milvus-io/milvus','vector','向量库|分布式|RAG',1],
+      ['Qdrant','📐','高性能向量搜索引擎，支持过滤查询','https://github.com/qdrant/qdrant','vector','向量库|搜索|高性能',1],
+      ['Chroma','🧬','轻量开源向量数据库，AI 应用友好','https://github.com/chroma-core/chroma','vector','向量库|轻量|开源',0],
+      ['Weaviate','🕸️','支持混合检索的向量数据库','https://github.com/weaviate/weaviate','vector','向量库|混合检索',0],
+      ['FAISS','🔍','Meta 开源向量相似度检索库','https://github.com/facebookresearch/faiss','vector','检索|Meta|库',0],
+      ['pgvector','🐘','PostgreSQL 向量扩展，复用现有数据库','https://github.com/pgvector/pgvector','vector','PostgreSQL|扩展|向量',0],
+      ['Whisper','🎙️','OpenAI 开源语音识别，多语言鲁棒','https://github.com/openai/whisper','speech','ASR|语音识别|OpenAI',1],
+      ['Fish Speech','🐟','开源高质量语音合成与声音克隆','https://github.com/fishaudio/fish-speech','speech','TTS|克隆|开源',1],
+      ['CosyVoice','🎤','阿里开源多语言语音生成大模型','https://github.com/FunAudioLLM/CosyVoice','speech','TTS|阿里|多语言',0],
+      ['ChatTTS','💬','开源对话式语音合成，中文效果佳','https://github.com/2noise/ChatTTS','speech','TTS|对话|中文',0],
+      ['Bark','🐕','Suno 开源文本转语音，富有表现力','https://github.com/suno-ai/bark','speech','TTS|表现力|Suno',0],
+      ['Piper','🔊','快速本地 TTS，适合嵌入式与边缘','https://github.com/rhasspy/piper','speech','TTS|本地|轻量',0]
+    
+]}
+};
+
+
+const state = { tab:'tools', cat:'all', q:'' };
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function renderCats(){
+  const g = DATA[state.tab];
+  $('cats').innerHTML = Object.entries(g.cats).map(([k,v]) =>
+    `<button class="chip ${k===state.cat?'active':''}" data-cat="${k}">${v}</button>`).join('');
+  $('cats').querySelectorAll('.chip').forEach(btn => btn.onclick = () => { state.cat = btn.dataset.cat; renderCats(); renderGrid(); });
+}
+
+function renderGrid(){
+  const g = DATA[state.tab];
+  const q = state.q.trim().toLowerCase();
+  const list = g.items.filter(it => (state.cat==='all' || it[4]===state.cat) &&
+    (!q || (it[0]+it[2]+it[5]).toLowerCase().includes(q)));
+  $('sectionTitle').textContent = state.cat==='all' ? (state.tab==='tools'?'全部 AI 工具':'全部开源项目') : g.cats[state.cat];
+  $('resultHint').textContent = `显示 ${list.length} 项`;
+  $('grid').innerHTML = list.length ? list.map(it => {
+    const [name,icon,desc,url,cat,tags,hot] = it;
+    const color = g.colors[cat] || 'var(--accent)';
+    return `<a class="card" href="${esc(url)}" target="_blank" rel="noopener" style="--c:${color}">
+      <div class="card-top">
+        <div class="ico">${icon}</div>
+        <div class="card-name">${esc(name)}${hot?'<span class="hot" title="热门">🔥</span>':''}</div>
+        <span class="arrow">↗</span>
+      </div>
+      <p class="card-desc">${esc(desc)}</p>
+      <div class="tags">${tags.split('|').filter(Boolean).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+    </a>`;
+  }).join('') : `<div class="empty"><div class="big">🔍</div><div>没有找到匹配的项目，换个关键词试试</div></div>`;
+}
+
+function switchTab(tab){
+  state.tab = tab; state.cat = 'all';
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===tab));
+  renderCats(); renderGrid();
+}
+
+$('tabs').querySelectorAll('.tab').forEach(t => t.onclick = () => switchTab(t.dataset.tab));
+let timer;
+$('search').addEventListener('input', e => { clearTimeout(timer); timer = setTimeout(()=>{ state.q = e.target.value; renderGrid(); }, 80); });
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT'){ e.preventDefault(); $('search').focus(); }
+  if (e.key === 'Escape' && document.activeElement === $('search')){ $('search').value=''; state.q=''; renderGrid(); $('search').blur(); }
+});
+$('themeBtn').onclick = () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur==='dark'?'light':'dark');
+};
+
+$('statTools').textContent = DATA.tools.items.length;
+$('statOss').textContent = DATA.oss.items.length;
+$('statCats').textContent = Object.keys(DATA.tools.cats).length - 1 + Object.keys(DATA.oss.cats).length - 1;
+$('tabCountTools').textContent = DATA.tools.items.length;
+$('tabCountOss').textContent = DATA.oss.items.length;
+$('year').textContent = new Date().getFullYear();
+renderCats(); renderGrid();
+
+</script>
+</body>
+</html>
