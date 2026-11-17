@@ -183,6 +183,38 @@
     .kbd{display:none}
     .section-head .hint{display:none}
   }
+
+  /* 自动收录面板 */
+  .auto-collect-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-top:18px}
+  .collect-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+  .collect-title{font-weight:600;color:var(--accent-2)}
+  .collect-body{margin-top:12px}
+  .collect-row{display:flex;gap:10px;flex-wrap:wrap}
+  .collect-row input{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--fg);outline:none}
+  .collect-row input:focus{border-color:var(--accent-2)}
+  .btn-primary,.btn-secondary{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+  .btn-primary{background:var(--accent-2);color:#0b0f19}
+  .btn-secondary{background:var(--border);color:var(--fg)}
+  .collect-hint{margin-top:8px;font-size:12px;color:var(--muted)}
+  .collect-status{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--border);display:none}
+  .collect-status.show{display:block}
+  .collect-status.ok{color:#22c55e}
+  .collect-status.err{color:#ef4444}
+
+  /* 热度榜 */
+  .rank-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .rank-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;transition:transform .15s,border-color .15s}
+  .rank-item:hover{transform:translateY(-2px);border-color:var(--accent-2)}
+  .rank-num{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800;font-size:14px;background:var(--bg);color:var(--fg)}
+  .rank-item:nth-child(1) .rank-num{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#0b0f19}
+  .rank-item:nth-child(2) .rank-num{background:linear-gradient(135deg,#e0e0e0,#a0a0a0);color:#0b0f19}
+  .rank-item:nth-child(3) .rank-num{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+  .rank-ico{font-size:22px}
+  .rank-info{flex:1;min-width:0}
+  .rank-name{font-weight:600;font-size:15px}
+  .rank-desc{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rank-score{font-size:12px;color:var(--accent-2);white-space:nowrap}
+  .rank-arrow{color:var(--muted)}
 </style>
 </head>
 <body data-page-node-id="o6AGefR8XFW0Kdua55DNo0">
@@ -218,6 +250,23 @@
   <div class="tabs" id="tabs" data-page-node-id="rfvIimyTSMaOtDpGTY9kqp">
     <button class="tab active" data-tab="tools" data-page-node-id="Hw18fCFyTTKWdoNGIoFFg3">🧰 AI 工具 <span class="count" id="tabCountTools" data-page-node-id="rIv7SKEw9hzQZYnXJmqzxM"></span></button>
     <button class="tab" data-tab="oss" data-page-node-id="Hfrn9bBGCTEzFYfLjlNL84">⭐ 开源项目 <span class="count" id="tabCountOss" data-page-node-id="Eu7qfSgC4GxidevkMusImQ"></span></button>
+    <button class="tab" data-tab="hot" data-page-node-id="HOT_RANK_TAB">🔥 热度榜 <span class="count" id="tabCountHot">Top 20</span></button>
+  </div>
+
+  <div class="auto-collect-panel" id="autoCollectPanel" data-page-node-id="AUTO_COLLECT_PANEL">
+    <div class="collect-header">
+      <span class="collect-title">📥 自动收录</span>
+      <button class="icon-btn" id="toggleCollectBtn" title="展开/收起">▼</button>
+    </div>
+    <div class="collect-body" id="collectBody">
+      <div class="collect-row">
+        <input type="url" id="collectUrl" placeholder="输入 JSON 数据源 URL…" autocomplete="off" />
+        <button id="collectBtn" class="btn-primary">从 URL 收录</button>
+        <button id="clearCollectBtn" class="btn-secondary">清空收录</button>
+      </div>
+      <div class="collect-hint">支持格式：数组 [name,icon,desc,url,cat,tags,hot] 或对象 {items:[...]}</div>
+      <div class="collect-status" id="collectStatus"></div>
+    </div>
   </div>
 
   <div class="cats" id="cats" data-page-node-id="7Rh4eUhdlK9xDWZrbKiLmU"></div>
@@ -437,6 +486,178 @@ $('tabCountTools').textContent = DATA.tools.items.length;
 $('tabCountOss').textContent = DATA.oss.items.length;
 $('year').textContent = new Date().getFullYear();
 renderCats(); renderGrid();
+
+// ============ 热度排行榜 & 自动收录 ============
+const STORAGE_KEY = 'aitools_data_v1';
+const VISIT_KEY = 'aitools_visits_v1';
+const AUTO_KEY = 'aitools_auto_v1';
+
+function loadStorage(key, def){
+  try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
+  catch(e){ return def; }
+}
+function saveStorage(key, val){
+  try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
+}
+
+// 合并所有数据源（DATA + 自动收录 + 用户自定义）
+function getMergedItems(){
+  const auto = loadStorage(AUTO_KEY, []);
+  return [...DATA.tools.items, ...DATA.oss.items, ...auto];
+}
+
+// 访问计数（点击时调用）
+function recordVisit(url){
+  const counts = loadStorage(VISIT_KEY, {});
+  counts[url] = (counts[url] || 0) + 1;
+  saveStorage(VISIT_KEY, counts);
+}
+
+// 热度分数计算：hot标记基础分 + 访问次数
+function getScore(item){
+  const visits = loadStorage(VISIT_KEY, {});
+  const base = item[6] ? 100 : 0; // hot flag
+  const v = visits[item[3]] || 0;
+  return base + v;
+}
+
+// 渲染热度榜
+function renderHotRank(){
+  const items = getMergedItems();
+  const ranked = items.map(it => ({item:it, score:getScore(it)}))
+    .sort((a,b)=> b.score - a.score)
+    .slice(0, 20);
+  const html = ranked.map((r,i) => {
+    const [name,icon,desc,url,cat,tags] = r.item;
+    return `<a class="rank-item" href="${esc(url)}" target="_blank" rel="noopener" data-url="${esc(url)}">
+      <div class="rank-num">${i+1}</div>
+      <div class="rank-ico">${icon}</div>
+      <div class="rank-info">
+        <div class="rank-name">${esc(name)}</div>
+        <div class="rank-desc">${esc(desc)}</div>
+      </div>
+      <div class="rank-score">🔥 ${r.score}</div>
+      <div class="rank-arrow">↗</div>
+    </a>`;
+  }).join('');
+  $('grid').innerHTML = `<div class="rank-list">${html || '<div class="empty">暂无数据</div>'}</div>`;
+  $('cats').innerHTML = '';
+  $('sectionTitle').textContent = '🔥 热度排行榜 Top 20';
+  $('resultHint').textContent = `共 ${items.length} 项 · 基于访问热度与标记排序`;
+
+  // 绑定点击计数
+  document.querySelectorAll('.rank-item').forEach(el=>{
+    el.addEventListener('click', ()=> recordVisit(el.dataset.url));
+  });
+}
+
+// 自动收录面板逻辑
+const collectBody = $('collectBody');
+const collectStatus = $('collectStatus');
+let collectExpanded = true;
+$('toggleCollectBtn').onclick = () => {
+  collectExpanded = !collectExpanded;
+  collectBody.style.display = collectExpanded ? 'block' : 'none';
+  $('toggleCollectBtn').textContent = collectExpanded ? '▼' : '▶';
+};
+
+function setCollectStatus(msg, ok=true){
+  collectStatus.textContent = msg;
+  collectStatus.className = 'collect-status show ' + (ok ? 'ok' : 'err');
+  setTimeout(()=> collectStatus.classList.remove('show'), 4000);
+}
+
+function normalizeItem(raw){
+  if(Array.isArray(raw)){
+    // [name,icon,desc,url,cat,tags,hot]
+    const [n,i,d,u,c,t,h] = raw;
+    return [String(n||''), String(i||''), String(d||''), String(u||''), String(c||'misc'), String(t||''), h?1:0];
+  }
+  if(raw && typeof raw==='object'){
+    const n=String(raw.name||'');
+    const i=String(raw.icon||'');
+    const d=String(raw.desc||'');
+    const u=String(raw.url||'');
+    const c=String(raw.cat||raw.category||'misc');
+    const t=String(raw.tags||'');
+    const h=raw.hot?1:0;
+    if(!n||!u) return null;
+    return [n,i,d,u,c,t,h];
+  }
+  return null;
+}
+
+async function fetchCollect(){
+  const url = $('collectUrl').value.trim();
+  if(!url){ setCollectStatus('请输入 URL', false); return; }
+  setCollectStatus('正在获取…', true);
+  try{
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    let arr = [];
+    if(Array.isArray(data)) arr = data;
+    else if(data && Array.isArray(data.items)) arr = data.items;
+    else if(data && Array.isArray(data.data)) arr = data.data;
+    else throw new Error('格式不支持');
+
+    const existing = getMergedItems();
+    const existUrls = new Set(existing.map(it=>it[3]));
+    const newItems = [];
+    let dup = 0;
+    for(const r of arr){
+      const it = normalizeItem(r);
+      if(!it) continue;
+      if(existUrls.has(it[3])){ dup++; continue; }
+      newItems.push(it);
+    }
+    if(newItems.length===0){
+      setCollectStatus(dup>0 ? `已收录 ${dup} 条重复项，无新增` : '无有效条目', false);
+      return;
+    }
+    // 保存到 localStorage
+    const saved = loadStorage(AUTO_KEY, []);
+    saved.push(...newItems);
+    saveStorage(AUTO_KEY, saved);
+    setCollectStatus(`成功收录 ${newItems.length} 条 · 重复 ${dup} 条`, true);
+    // 如果当前在热度榜，刷新
+    if(state.tab==='hot') renderHotRank();
+  }catch(e){
+    setCollectStatus('收录失败: '+e.message, false);
+  }
+}
+
+$('collectBtn').onclick = fetchCollect;
+$('clearCollectBtn').onclick = ()=>{
+  localStorage.removeItem(AUTO_KEY);
+  localStorage.removeItem(VISIT_KEY);
+  setCollectStatus('已清空自动收录与访问数据', true);
+  if(state.tab==='hot') renderHotRank();
+};
+
+// 重写 switchTab 以支持热度榜
+const _origSwitch = switchTab;
+switchTab = function(tab){
+  state.tab = tab; state.cat = 'all';
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===tab));
+  if(tab==='hot'){ renderHotRank(); }
+  else{ renderCats(); renderGrid(); }
+};
+
+// 绑定卡片点击计数（原有 grid 卡片）
+const _origRenderGrid = renderGrid;
+renderGrid = function(){
+  _origRenderGrid();
+  document.querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('click', ()=> recordVisit(el.href));
+  });
+};
+
+// 初始化统计（包含自动收录）
+const _all = getMergedItems();
+$('tabCountTools').textContent = DATA.tools.items.length;
+$('tabCountOss').textContent = DATA.oss.items.length;
+$('tabCountHot').textContent = 'Top 20';
 
 </script>
 </body>
